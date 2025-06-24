@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: AVQA Train (DGSCT)",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "/mnt/hdd_3A/sonyadir/DG-SCT/DG-SCT/AVQA/net_grd_avst/main_avst.py",
+        "console": "integratedTerminal",
+        "justMyCode": false,
+        "python": "/mnt/hdd_3A/sonyadir/miniconda3/envs/DGSCT/bin/python",
+        "args": [
+          "--mode", "train",
+          "--audio_dir", "data/AVQA/vggish",
+          "--video_res14x14_dir", "data/AVQA/frames/",
+          "--wandb", "0",
+          "--num_workers", "16",
+          "--batch-size", "8",
+          "--model_name", "swinv2_tune_av+vggish",
+          "--backbone_type", "audioset",
+          "--Adapter_downsample", "8",
+          "--num_tokens", "2",
+          "--gpu", "1"
+        ],
+        "env": {
+          "CUDA_VISIBLE_DEVICES": "1"
+        }
+      }
+    ]
+  }

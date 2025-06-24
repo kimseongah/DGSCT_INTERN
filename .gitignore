@@ -1,0 +1,9 @@
+data
+flash-attention/
+mmaction2
+*.pyc
+wandb
+models
+*.pt
+*.pth
+*.ckpt
