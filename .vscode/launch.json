@@ -5,10 +5,11 @@
         "name": "Python: AVQA Train (DGSCT)",
         "type": "debugpy",
         "request": "launch",
-        "program": "/mnt/hdd_3A/sonyadir/DG-SCT/DG-SCT/AVQA/net_grd_avst/main_avst.py",
+        "program": "/workspace/DGSCT_INTERN/DG-SCT/AVQA/net_grd_avst/main_avst.py",
+        "cwd": "/workspace/DGSCT_INTERN/DG-SCT/AVQA/",
         "console": "integratedTerminal",
         "justMyCode": false,
-        "python": "/mnt/hdd_3A/sonyadir/miniconda3/envs/DGSCT/bin/python",
+        "python": "/workspace/venv39/bin/python",
         "args": [
           "--mode", "train",
           "--audio_dir", "data/AVQA/vggish",
@@ -23,7 +24,9 @@
           "--gpu", "1"
         ],
         "env": {
-          "CUDA_VISIBLE_DEVICES": "1"
+          "CUDA_VISIBLE_DEVICES": "1",
+          "LD_LIBRARY_PATH": "/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
+          "TORCH_CUDA_ARCH_LIST": "8.0"
         }
       }
     ]

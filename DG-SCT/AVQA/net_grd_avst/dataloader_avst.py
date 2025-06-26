@@ -38,7 +38,7 @@ class AVQA_dataset(Dataset):
 
 		self.root_path = root_path
 
-		samples = json.load(open(os.path.join(root_path, '/mnt/hdd_3A/sonyadir/DG-SCT/data/AVQA/json/avqa-train.json'), 'r'))
+		samples = json.load(open(os.path.join(root_path, '/workspace/DGSCT_INTERN/data/AVQA/json/avqa-train.json'), 'r'))
 
 		# nax =  nne
 		ques_vocab = ['<pad>']

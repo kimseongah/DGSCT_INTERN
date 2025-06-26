@@ -275,8 +275,10 @@ def main():
 		# 	scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
 		# print("\n-------------- load checkpoint models --------------")
 		# ===================================== for fast training ===============================================
-
-
+		k_last_blocks=4
+		depth = len(model.swin.blocks)
+		tune_ids = set(range(depth - k_last_blocks, depth))          # {44,45,46,47}
+		always_open = ("swin.norm", "swin.attn_pool", "swin.clip_proj")
 		param_group = []
 		train_params = 0
 		total_params = 0
@@ -290,7 +292,16 @@ def main():
 				tmp *= num
 
 			if 'ViT'in name or 'swin' in name or 'Resnet' in name:
-				if 'norm' in name:
+				parts = name.split('.')
+				if len(parts) > 2 and parts[1] == "blocks" and parts[2].isdigit() and int(parts[2]) in tune_ids:
+					param.requires_grad = True
+					total_params += tmp
+					train_params += tmp
+				if any(name.startswith(tok) for tok in always_open):
+					param.requires_grad = True
+					total_params += tmp
+					train_params += tmp
+				elif 'norm' in name:
 					param.requires_grad = bool(args.is_vit_ln)
 					total_params += tmp
 					train_params += tmp
@@ -303,7 +314,12 @@ def main():
 					param.requires_grad = False
 					total_params += tmp
 				
-			elif 'htsat' in name:
+			elif name == "audio_encoder.encoder.pos_conv.0.weight":
+				param.requires_grad = True
+				train_params += tmp
+				total_params += tmp
+				print('########### train layer:', name)
+			elif "audio_encoder" in name:
 				param.requires_grad = False
 				total_params += tmp
 			# ### <----
